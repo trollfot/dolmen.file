@@ -1,0 +1,13 @@
+<div class="file-field">
+  <div class="file-download"
+       tal:condition="file">
+    <a tal:attributes="href file/url"
+       tal:content="file/name" />
+    <span class="discreet">
+      (<tal:size content="file/size" />)
+    </span>
+  </div>
+
+  <em class="discreet" tal:condition="not: file"
+      i18n:translate="no_file">No file uploaded yet.</em>
+</div>
