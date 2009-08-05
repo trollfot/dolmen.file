@@ -1,9 +1,0 @@
-<div class="file-field" i18n:domain="dolmen_file">
-  <input type="hidden"
-	 tal:attributes="name field/cooked_name"
-	 value="1" />
-  <div tal:attributes="class string:_file_${field/name}">
-    <input type="file"
-	   tal:attributes="name field/name" />
-  </div>
-</div>
