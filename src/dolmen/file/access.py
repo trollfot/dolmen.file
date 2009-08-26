@@ -40,7 +40,7 @@ class FileTraverser(grok.MultiAdapter):
 
     def traverse(self, name, ignore):
         obj = self.get_file(name)
-        if file is not None:
+        if obj is not None:
             return getMultiAdapter((obj, self.request), name='file_publish')
         raise NotFound(self.context, name, self.request)
 
