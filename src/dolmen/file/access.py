@@ -19,7 +19,8 @@ class FilePublisher(grok.View):
         if getattr(self.context, "filename", None):
             self.response.setHeader(
                 'Content-Disposition',
-                'attachment; filename="%s"' % self.context.filename.encode('utf-8')
+                'attachment; filename="%s"' % (
+                    self.context.filename.encode('utf-8'))
                 )
         self.response.setHeader('Content-Type', self.context.contentType[0])
         self.response.setHeader('Content-Length', self.context.getSize())
