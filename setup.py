@@ -26,6 +26,7 @@ setup(name='dolmen.file',
           'setuptools',
           'grok',
           'zope.app.file',
+          'dolmen.builtins',
       ],
       entry_points="""
       # -*- Entry points: -*-

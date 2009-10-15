@@ -2,5 +2,5 @@
 
 from field import FileField, IFileField
 from access import FilePublisher, FileTraverser, DownloadTraverser
-from _persistent import NamedFile, INamedFile
-from _property import FileProperty
+from file import NamedFile, INamedFile
+from property import FileProperty
