@@ -1,13 +1,15 @@
+from os.path import join
 from setuptools import setup, find_packages
-import os
 
-version = '1.0'
+version = '0.1'
 
 setup(name='dolmen.file',
       version=version,
-      description="",
-      long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      description="A Zope3 File representation package.",
+      long_description= "%s\n\n%s" % (
+          open(join('src', 'dolmen','file', 'README.txt')).read(),
+          open(join('docs', 'HISTORY.txt')).read(),
+          ),
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -24,7 +26,14 @@ setup(name='dolmen.file',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'grok',
+          'grokcore.view',
+          'zope.schema',
+          'zope.security',
+          'zope.interface',
+          'zope.component',
+          'zope.publisher',
+          'zope.traversing',
+          'zope.contenttype',
           'zope.app.file',
           'dolmen.builtins',
       ],

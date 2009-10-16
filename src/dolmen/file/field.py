@@ -7,6 +7,7 @@ class IFileField(interface.Interface):
     """A field storing binary datas.
     """
 
+
 class FileField(schema.Field):
     interface.implements(IFileField)
 

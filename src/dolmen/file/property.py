@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from zope.app.file import File
 from dolmen.file import NamedFile
 
-_marker = object()
 
+_marker = object()
 
 class FileProperty(object):
     """Stores the given file data in a NamedFile
@@ -25,7 +24,8 @@ class FileProperty(object):
             raise ValueError(self.__name, 'field is readonly')
 
         if value is not None:
-            file = NamedFile(data=value, filename=value.filename)
+            filename = getattr(value, 'filename', None)
+            file = NamedFile(data=value, filename=filename)
         else:
             file = None
             
