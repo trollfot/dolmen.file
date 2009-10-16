@@ -11,7 +11,7 @@ setup(name='dolmen.file',
           open(join('docs', 'HISTORY.txt')).read(),
           ),
       classifiers=[
-          "Framework :: Grok",
+          "Framework :: Zope3",
           "Programming Language :: Python",
           "Topic :: Software Development :: Libraries :: Python Modules",
           ],
