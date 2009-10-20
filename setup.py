@@ -1,20 +1,35 @@
 from os.path import join
 from setuptools import setup, find_packages
 
-version = '0.1'
+name = 'dolmen.file'
+version = '0.2dev'
+readme = open(join('src', 'dolmen', 'file', "README.txt")).read()
+history = open(join('docs', 'HISTORY.txt')).read()
 
-setup(name='dolmen.file',
+install_requires = [
+    'setuptools',
+    'grokcore.view',
+    'zope.schema',
+    'zope.security',
+    'zope.interface',
+    'zope.component',
+    'zope.publisher',
+    'zope.traversing',
+    'zope.contenttype',
+    'zope.app.file',
+    'dolmen.builtins',
+    ]
+
+tests_require = install_requires + [
+    'zope.testing',
+    'zope.app.testing',
+    'zope.app.zcmlfiles',
+    ]
+
+setup(name=name,
       version=version,
       description="A Zope3/Grok File Representation package.",
-      long_description= "%s\n\n%s" % (
-          open(join('src', 'dolmen','file', 'README.txt')).read(),
-          open(join('docs', 'HISTORY.txt')).read(),
-          ),
-      classifiers=[
-          "Framework :: Zope3",
-          "Programming Language :: Python",
-          "Topic :: Software Development :: Libraries :: Python Modules",
-          ],
+      long_description = readme + '\n\n' + history,
       keywords='Grok Zope3 file download',
       author='Souheil Chelfouh',
       author_email='trollfot@gmail.com',
@@ -24,21 +39,18 @@ setup(name='dolmen.file',
       package_dir={'': 'src'},
       namespace_packages=['dolmen'],
       include_package_data=True,
-      zip_safe=False,
-      install_requires=[
-          'setuptools',
-          'grokcore.view',
-          'zope.schema',
-          'zope.security',
-          'zope.interface',
-          'zope.component',
-          'zope.publisher',
-          'zope.traversing',
-          'zope.contenttype',
-          'zope.app.file',
-          'dolmen.builtins',
-      ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
-      )
+      zip_safe=True,
+      tests_require = tests_require,
+      install_requires = install_requires,
+      extras_require = {'test': tests_require},
+      test_suite="dolmen.file",
+      classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'Framework :: Zope3',
+        'Intended Audience :: Other Audience',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+          ],
+    )
