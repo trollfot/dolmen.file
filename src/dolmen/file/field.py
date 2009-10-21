@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema, interface
+from zope.schema import Field
+from zope.interface import implements, Interface
 
 
-class IFileField(interface.Interface):
+class IFileField(Interface):
     """A field storing binary datas.
     """
 
 
-class FileField(schema.Field):
-    interface.implements(IFileField)
+class IImageField(IFileField):
+    """Marker interface for fields storing images.
+    """
 
-    def __init__(self, **kw):
-        super(FileField, self).__init__(**kw)
 
-    def _validate(self, value):
-        super(FileField, self)._validate(value)
+class FileField(Field):
+    """A field handling a file representation
+    """
+    implements(IFileField)
+
+
+class ImageField(FileField):
+    """A field handling an image file representation
+    """
+    implements(IImageField)

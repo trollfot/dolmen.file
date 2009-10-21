@@ -212,7 +212,16 @@ A self-explanatory exemple::
     >>> manfred.binary.data
     'Foobar'
 
-    
+There are two fields provided by `dolmen.file`: the FileField and the
+ImageField. They are just logical separation but have a common base::  
+
+    >>> from dolmen.file import IImageField, IFileField, ImageField
+    >>> IImageField.extends(IFileField)
+    True
+    >>> isinstance(ImageField(), FileField)
+    True
+
+
 Traversal
 ---------
 
