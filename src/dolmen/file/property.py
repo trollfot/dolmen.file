@@ -42,8 +42,6 @@ class FileProperty(object):
             value = getattr(field, 'default', _marker)
             if value is _marker:
                 raise AttributeError(self.__name)
-        if value:
-            value.__parent__ = inst
         return value
 
     def __getattr__(self, name):
