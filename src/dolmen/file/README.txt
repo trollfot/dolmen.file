@@ -126,6 +126,14 @@ To specifiy a filename, we can give it to the constructor::
     >>> file.filename
     u'foobar.txt'
 
+The filename can be both unicode or simple string::
+
+    >>> file = NamedFile('Foobar', filename=u'foobar.txt')
+    >>> file.data
+    'Foobar'
+    >>> file.filename
+    u'foobar.txt'
+
 The filename provided had an extension : 'txt'. This extension is used
 by the NamedFile, while instanciated, to try and guess the mimetype of
 the data::
