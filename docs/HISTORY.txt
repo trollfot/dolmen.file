@@ -5,7 +5,7 @@ Changelog
 ------------------
 
 * Release compatible with ZTK 1.0dev versions. Pinned down the version
-  of zope.traversing in the setup.py.
+  of zope.traversing in the setup.py. It now runs on Python 2.6 !
 
 
 0.3.2 (2009-10-23)
