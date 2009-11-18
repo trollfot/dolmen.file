@@ -284,7 +284,7 @@ access a file that is not an IFile, we get another error::
     >>> traverser.traverse('__name__')
     Traceback (most recent call last):
     ...
-    TraversalError: '__name__ is not a valid IFile'
+    LocationError: '__name__ is not a valid IFile'
 
 We gracefully end our tests::
 
