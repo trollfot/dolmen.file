@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.5.0 (2010-02-28)
+------------------
+
+* Updated code base to be fully pep8 compatible.
+
+* `zope.app` dependencies have been entirely dropped. 
+
+* ``dolmen.file`` is no longer a layer above ``zope.app.file``. It
+  nows integrates the few features it needed from ``zope.app.file``.
+
+
 0.4.0 (2009-11-18)
 ------------------
 
@@ -33,7 +44,7 @@ Changelog
 ------------------
 
 * Added an image field with the corresponding interface. This was
-  previously part of `dolmen.imaging`. The ImageField component is a
+  previously part of ``dolmen.imaging``. The ImageField component is a
   simple subclass of the default FileField.
 
 

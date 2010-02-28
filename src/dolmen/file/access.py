@@ -5,7 +5,6 @@ import grokcore.view as grok
 from dolmen.file import INamedFile
 from zope.interface import Interface
 from zope.component import getMultiAdapter
-from zope.app.file.interfaces import IFile
 from zope.security.interfaces import Unauthorized
 from zope.security.management import checkPermission
 from zope.publisher.interfaces import NotFound
@@ -15,17 +14,19 @@ from zope.traversing.interfaces import ITraversable, TraversalError
 
 class FilePublisher(grok.View):
     grok.name('file_publish')
-    grok.context(IFile)
+    grok.context(INamedFile)
 
     def update(self):
+        """Sets the response headers, according to the data infos.
+        """
         if INamedFile.providedBy(self.context) and self.context.filename:
             self.response.setHeader(
                 'Content-Disposition',
                 'attachment; filename="%s"' % (
-                    self.context.filename.encode('utf-8'))
-                )
+                    self.context.filename.encode('utf-8')))
+
         self.response.setHeader('Content-Type', self.context.contentType)
-        self.response.setHeader('Content-Length', self.context.getSize())
+        self.response.setHeader('Content-Length', self.context.size)
 
     def render(self):
         return self.context.data
@@ -34,7 +35,7 @@ class FilePublisher(grok.View):
 class FileTraverser(grok.MultiAdapter):
     grok.baseclass()
     grok.provides(ITraversable)
-    
+
     def __init__(self, context, request=None):
         self.context = context
         self.request = request
@@ -46,8 +47,8 @@ class FileTraverser(grok.MultiAdapter):
     def traverse(self, name, ignore=None):
         obj = self.get_file(name)
         if obj is not None:
-            if not IFile.providedBy(obj):
-                raise TraversalError('%s is not a valid IFile' % name)
+            if not INamedFile.providedBy(obj):
+                raise TraversalError('%s is not a valid INamedFile' % name)
             return getMultiAdapter((obj, self.request), name='file_publish')
         raise NotFound(self.context, name, self.request)
 

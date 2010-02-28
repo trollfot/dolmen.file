@@ -4,6 +4,7 @@ import re
 
 _nameFinder = re.compile(r'(.*[\\/:])?(.+)')
 
+
 def clean_filename(name):
     match = _nameFinder.match(name)
     if match is not None:

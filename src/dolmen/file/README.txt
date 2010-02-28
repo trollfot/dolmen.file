@@ -2,20 +2,17 @@
 dolmen.file
 ===========
 
-``dolmen.file`` is a layer above ``zope.app.file.file.File``, adding a
-notion of filename, missing in the original implementation.
-
+``dolmen.file`` allows you to manage and store files within the ZODB.
+It takes the core functionalities of ``zope.app.file``, and simplifies
+them, using Grok for views and adapters registrations.
 
 Compatibility
 =============
 
 In order to make sure that our `File` implementation is complete and
-functional, we test it against the original functionalities of the
-`zope.app.file` version::
+functional, we test it against the original ``zope.app.file`` tests::
 
-    >>> from zope.app.file.file import FileChunk
-    >>> from zope.app.file.interfaces import IFile
-    >>> from dolmen.file import NamedFile, INamedFile
+    >>> from dolmen.file import NamedFile, INamedFile, FileChunk
 
 Let's test the constructor::
 
@@ -67,7 +64,7 @@ Let's test large data input::
     Insert as string:
 
     >>> file.data = 'Foobar'*60000
-    >>> file.getSize()
+    >>> file.size
     360000
     >>> file.data == 'Foobar'*60000
     True
@@ -76,7 +73,7 @@ Insert data as FileChunk::
 
     >>> fc = FileChunk('Foobar'*4000)
     >>> file.data = fc
-    >>> file.getSize()
+    >>> file.size
     24000
     >>> file.data == 'Foobar'*4000
     True
@@ -88,16 +85,14 @@ Insert data from file object::
     >>> sio.write('Foobar'*100000)
     >>> sio.seek(0)
     >>> file.data = sio
-    >>> file.getSize()
+    >>> file.size
     600000
     >>> file.data == 'Foobar'*100000
     True
 
-Last, but not least, verify the two interfaces::
+Last, but not least, verify the interface implementation::
 
     >>> from zope.interface.verify import verifyClass
-    >>> INamedFile.extends(IFile)
-    True
     >>> INamedFile.implementedBy(NamedFile)
     True
     >>> verifyClass(INamedFile, NamedFile)
@@ -158,15 +153,16 @@ In order to access our file, ``dolmen.file`` provides a view called
 `file_publish` that sets the proper headers and returns the
 data. Let's set up a simple environment to test that behavior::
 
+    >>> from zope.component.hooks import getSite
     >>> from zope.component import getMultiAdapter
     >>> from zope.publisher.browser import TestRequest
 
-    >>> root = getRootFolder()
+    >>> root = getSite()
     >>> root['myfile'] = NamedFile('Foobar', filename='foobar.txt')
     >>> myfile = root['myfile']
 
-    The `file_publish` view will adapt a IFile and a request and, when
-    called, will return the data.
+    The `file_publish` view will adapt a INamedFile and a request and,
+    when called, will return the data.
 
     >>> request = TestRequest()
     >>> view = getMultiAdapter((myfile, request), name='file_publish')
@@ -279,12 +275,12 @@ What if we traverse to an unknown field ? Let's try::
 
 
 Everything is fine : a NotFound error has been raised. If we try to
-access a file that is not an IFile, we get another error::
+access a file that is not an INamedFile, we get another error::
 
     >>> traverser.traverse('__name__')
     Traceback (most recent call last):
     ...
-    LocationError: '__name__ is not a valid IFile'
+    LocationError: '__name__ is not a valid INamedFile'
 
 We gracefully end our tests::
 

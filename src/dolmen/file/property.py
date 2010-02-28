@@ -5,9 +5,11 @@ from dolmen.file import NamedFile
 
 _marker = object()
 
+
 class FileProperty(object):
     """Stores the given file data in a NamedFile
     """
+
     def __init__(self, field, name=None):
         if name is None:
             name = field.__name__
@@ -19,8 +21,8 @@ class FileProperty(object):
         name = self.__name
         field = self.__field.bind(inst)
         fields = inst.__dict__
-        
-        if field.readonly and field.has_key(self.__name):
+
+        if field.readonly and self.__name in field:
             raise ValueError(self.__name, 'field is readonly')
 
         if value is not None:
@@ -28,7 +30,7 @@ class FileProperty(object):
             file = NamedFile(data=value, filename=filename)
         else:
             file = None
-            
+
         fields[name] = file
         inst._p_changed = True
 
