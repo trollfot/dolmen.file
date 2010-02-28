@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.5.1 (2010-02-28)
+------------------
+
+* Added an `ISized` adapter for `INamedFile` objects. Added tests
+  accordingly.
+
+
 0.5.0 (2010-02-28)
 ------------------
 

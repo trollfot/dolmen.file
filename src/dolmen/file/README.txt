@@ -146,6 +146,22 @@ the data::
     'text/plain'
 
 
+Size
+====
+
+To represent the size of the stored data, ``dolmen.file`` uses a
+normalized adaptation, based on ``zope.size`` definitions::
+
+  >>> from zope.size import ISized
+  >>> sized = ISized(file)
+  >>> sized
+  <dolmen.file.size.Sized object at ...>
+  >>> sized.sizeForSorting()
+  ('byte', 6)
+  >>> sized.sizeForDisplay()
+  u'1 KB'
+
+
 Access
 ======
 
