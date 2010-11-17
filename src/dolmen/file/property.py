@@ -7,7 +7,7 @@ _marker = object()
 
 
 class FileProperty(object):
-    """Stores the given file data in a NamedFile
+    """Stores the given file data in an INamedFile component.
     """
 
     def __init__(self, field, name=None, factory=NamedFile):
