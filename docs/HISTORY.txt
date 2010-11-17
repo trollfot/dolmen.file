@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.6 (2010-11-17)
+------------------
+
+* Tested for Grok 1.2.
+
+* ``zope.testing`` dependency has been removed.
+
+* The INamedFile factory is now pluggable, in the file property. Tests
+  have been added to fix that behavior.
+
+
 0.5.1 (2010-02-28)
 ------------------
 

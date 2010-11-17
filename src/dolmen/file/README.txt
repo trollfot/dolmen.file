@@ -210,7 +210,10 @@ dedicated components: the field, the property and the traverser.
 Field and Property
 ------------------
 
-A self-explanatory exemple::
+A property is provided to allow a transparent use of a INamedFile component.
+
+Working exemple
+~~~~~~~~~~~~~~~
 
     >>> from persistent import Persistent
     >>> from dolmen.file import FileProperty, FileField
@@ -231,6 +234,39 @@ A self-explanatory exemple::
 
     >>> manfred.binary.data
     'Foobar'
+
+Custom factory
+~~~~~~~~~~~~~~
+
+    >>> class MyFile(NamedFile):
+    ...     """My own file type.
+    ...     """
+
+    >>> class CustomContent(object):
+    ...     implements(IContent)
+    ...     binary = FileProperty(IContent['binary'], factory=MyFile)
+
+    >>> custom = CustomContent()
+    >>> custom.binary = FileChunk('Foobar')
+    >>> custom.binary
+    <MyFile object at ...>
+
+Error
+~~~~~
+ 
+    >>> class MyFalseFile(object):
+    ...     """My own file type.
+    ...     """
+
+    >>> class FaultyContent(object):
+    ...     implements(IContent)
+    ...     binary = FileProperty(IContent['binary'], factory=MyFalseFile)
+    Traceback (most recent call last):
+    ...
+    ValueError: Provided factory is not a valid INamedFile
+
+Fields
+~~~~~~
 
 There are two fields provided by `dolmen.file`: the FileField and the
 ImageField. They are just logical separation but have a common base::  

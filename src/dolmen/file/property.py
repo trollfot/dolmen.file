@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from dolmen.file import NamedFile
+from dolmen.file import NamedFile, INamedFile
 
 
 _marker = object()
@@ -10,12 +10,16 @@ class FileProperty(object):
     """Stores the given file data in a NamedFile
     """
 
-    def __init__(self, field, name=None):
+    def __init__(self, field, name=None, factory=NamedFile):
         if name is None:
             name = field.__name__
 
+        if not INamedFile.implementedBy(factory):
+            raise ValueError("Provided factory is not a valid INamedFile")
+
         self.__field = field
         self.__name = name
+        self.__factory = factory
 
     def __set__(self, inst, value):
         name = self.__name
@@ -27,7 +31,7 @@ class FileProperty(object):
 
         if value is not None:
             filename = getattr(value, 'filename', None)
-            file = NamedFile(data=value, filename=filename)
+            file = self.__factory(data=value, filename=filename)
         else:
             file = None
 
