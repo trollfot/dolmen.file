@@ -1,70 +1,34 @@
 # -*- coding: utf-8 -*-
-"""FileChunk is taken from the zope.app.file package.
-Copyright Zope Foundation.
-"""
 
 import transaction
-from dolmen.file import IDataChunk, FileChunk, clean_filename
-from persistent import Persistent
-from zope import schema
-from zope.interface import Interface, implements
+import persistent
+
+from cromlech.file import IFile, clean_filename
+from dolmen.file import IDataChunk, FileChunk
 from zope.contenttype import guess_content_type
+from zope.interface import implements
 from zope.schema.fieldproperty import FieldProperty
 
 # set the size of the chunks
 MAXCHUNKSIZE = 1 << 16
 
 
-class INamedFile(Interface):
-    """Defines a file that is aware of its filename.
+class File(persistent.Persistent):
+    """An IFile implementation that can guess the content type.
     """
-    filename = schema.TextLine(
-        title=u"Name of file",
-        required=True,
-        default=u'',
-        )
+    implements(IFile)
+    filename = FieldProperty(IFile['filename'])
 
-    contentType = schema.BytesLine(
-        title=u'Content Type',
-        description=u'The content type identifies the type of data.',
-        default='',
-        required=False,
-        missing_value='',
-        )
-
-    data = schema.Bytes(
-        title=u'Data',
-        description=u'The actual content of the object.',
-        default='',
-        missing_value='',
-        required=False,
-        )
-
-    size = schema.Int(
-        title=u"Size",
-        description=u"Size in bytes",
-        readonly=True,
-        required=True,
-        )
-
-
-class NamedFile(Persistent):
-    """A simple INamedFile implementation that can guess the content type
-    from the value and the filename.
-    """
-    implements(INamedFile)
-    filename = FieldProperty(INamedFile['filename'])
-
-    def __init__(self, data='', contentType='', filename=None):
+    def __init__(self, data='', content_type='', filename=None):
         self.data = data
         if filename is not None:
             self.filename = clean_filename(filename)
-        if not contentType and filename:
+        if not content_type and filename:
             # If we handle large files, we don't want them read just
             # to guess the content type. We provide only the filename.
-            self.contentType, enc = guess_content_type(name=filename)
+            self.content_type, enc = guess_content_type(name=filename)
         else:
-            self.contentType = contentType
+            self.content_type = content_type
 
     @apply
     def data():

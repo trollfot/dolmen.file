@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ZODB stored data.
 """
-from persistent import Persistent
+import persistent
 from zope.interface import Interface, implements
 
 
@@ -18,8 +18,8 @@ class IDataChunk(Interface):
         """
 
 
-class FileChunk(Persistent):
-    """Wrapper for possibly large data
+class FileChunk(persistent.Persistent):
+    """Wrapper for possibly large data.
     """
     implements(IDataChunk)
 
