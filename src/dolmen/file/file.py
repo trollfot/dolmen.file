@@ -94,7 +94,7 @@ class File(persistent.Persistent):
             while end > 0:
                 pos = end - MAXCHUNKSIZE
                 if pos < MAXCHUNKSIZE:
-                    pos = 0 # we always want at least MAXCHUNKSIZE bytes
+                    pos = 0  # we always want at least MAXCHUNKSIZE bytes
                     seek(pos)
                     data = FileChunk(read(end - pos))
 

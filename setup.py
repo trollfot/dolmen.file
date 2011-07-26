@@ -8,14 +8,12 @@ history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
     'ZODB3',
+    'transaction',
     'cromlech.file',
-    'grokcore.component',
     'setuptools',
-    'zope.component',
     'zope.contenttype',
     'zope.interface',
     'zope.schema',
-    'zope.size',
     ]
 
 tests_require = [

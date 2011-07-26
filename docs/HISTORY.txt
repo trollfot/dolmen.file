@@ -1,6 +1,16 @@
 Changelog
 =========
 
+2.0a1 (2011-07-26)
+------------------
+
+* ``dolmen.file`` is now meant to be used in `Cromlech`.
+
+* All the browser components have been removed.
+
+* The core components are now located in ``cromlech.file``
+
+
 0.6 (2010-11-17)
 ------------------
 
